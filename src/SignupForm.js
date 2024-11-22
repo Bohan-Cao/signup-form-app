@@ -29,7 +29,7 @@ const SignupForm = () => {
     const [currentUser, setCurrentUser] = useState(null); // Track logged-in user
     const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
     const [isSignUpSuccess, setIsSignUpSuccess] = useState(false); // Track if sign-up was successful
-    
+
     // Validate the Sign-up form
     const validateSignUp = () => {
         const newErrors = {};
@@ -37,6 +37,10 @@ const SignupForm = () => {
         if (!formData.fullName) newErrors.fullName = 'Full Name is required';
         // Check if email is valid
         if (!formData.email) newErrors.email = 'Email is required';
+        // Check if the email already exists in the users array
+        else if (users.some((user) => user.email === formData.email)) {
+            newErrors.email = 'This email is already registered';
+        }
         // Check if password is provided
         else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Invalid email format';
         if (!formData.password) newErrors.password = 'Password is required';
